@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .helpers.global_helpers import *
 import pandas as pd
 import re
+
 from parsel import Selector
 # Create your views here.
 def daftaruniv(request):
@@ -166,6 +167,6 @@ def scrape_all_authors(request, hasil):
             print(param)
         except Exception as e:
             print("An error occurred:", e)
-    dd(data)
-    return HttpResponse('scrape author')
+    endp = f"detuniv/{hasil}"
+    return redirect(endp)
         
