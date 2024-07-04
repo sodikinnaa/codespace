@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Universitas</title>
+</head>
+<style>
+    .content {
+        margin: 20px;
+        margin-top: 50px;
+    }
+    .p-3{
+        margin-bottom: 10px;
+    }
+</style>
+<body>
+    <div class="content">
+        <div class="data-univ">
+            <table width="40%">
+                <tr>
+                    <td>Nama Universitas : </td>
+                    <td>{{ content.data_univ.nama_kampus }}</td>
+                    
+                </tr>
+                <tr>
+                    <td>Url Kampus : </td>
+                    <td> <a href="https://{{ content.data_univ.url_kampus }}">{{ content.data_univ.url_kampus }}</a></td>                    
+                </tr>
+                <tr>
+                    <td>Total Sitasi : </td>
+                    <td>{{ content.data_univ.total_sitasi }}</td>                    
+                </tr>
+            </table>                   
+        </div>
+        <div class="data-table">
+            <h1>Daftar Universitas</h1>
+            <a href="/singkronisasi/{{ content.data_univ.url_kampus }}" onclick="showLoadingModal()"><button class="p-3">singkronisasi</button></a>
+            
+            <!-- Modal untuk loading animasi -->
+            <div id="loadingModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:1000; text-align:center;">
+                <div style="position:relative; top:50%; transform:translateY(-50%);">
+                    <div class="spinner" style="border: 16px solid #f3f3f3; border-top: 16px solid #3498db; border-radius: 50%; width: 120px; height: 120px; animation: spin 2s linear infinite;"></div>
+                </div>
+            </div>
+
+            <script>
+                function showLoadingModal() {
+                    document.getElementById('loadingModal').style.display = 'block';
+                }
+
+                // CSS untuk animasi spinner
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            </script>
+            <a href="/"><button class="p-3">back</button></a>
+            
+            <table border="1px" width="50%">
+                <tr>
+                    <th>No</th>
+                    <th>Id Dosen</th>
+                    <th>Nama Dosen</th>
+                    <th>Url Dosen</th>
+                    <th>Afiliasi</th>
+                    <th>Sitasi</th>
+                </tr>
+                {% for dosen in content.data_dosen %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ dosen.id_sitasi_dosen }}</td>
+                    <td>{{ dosen.nama_dosen }}</td>
+                    <td><a href="{{ dosen.url_dosen }}">{{ dosen.nama_dosen }}</a></td>
+                    <td>{{ dosen.email_verified }}</td>
+                    <td>{{ dosen.total_sitasi }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>
