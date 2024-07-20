@@ -7,13 +7,14 @@ import re
 from parsel import Selector
 # Create your views here.
 def daftaruniv(request):
-    endp = "https://media.datadebasa.com/api/v1.0/universitas"
+    endp = "http://localhost:8080/api/v1.0/universitas"
     data = getData(endp)
+    dd(data)
     return render(request, 'daftar_univ.html', {'content': data})
 
 def detuniv(request, prefix):
-    endp = f"https://media.datadebasa.com/api/v1.0/universitas/{prefix}?max=1000"
-    endpdosen = f"https://media.datadebasa.com/api/v1.0/dosen/{prefix}?max=1000"
+    endp = f"http://localhost:8080/api/v1.0/universitas/{prefix}?max=1000"
+    endpdosen = f"http://localhost:8080/api/v1.0/dosen/{prefix}?max=1000"
     data_univ = getData(endp)
     data_dosen = getData(endpdosen)
     data ={
@@ -24,13 +25,13 @@ def detuniv(request, prefix):
     
     return render(request, 'detail_univ.html', {'content': data})
 
-def postuniv(request):
+def postuniv(requestm):
     nama_kampus = request.GET.get('nama_kampus')
     url_kampus = request.GET.get('url_kampus')
     
     # Lakukan sesuatu dengan data yang diambil, misalnya menyimpannya ke database atau memprosesnya lebih lanjut
     response = f"Nama Kampus: {nama_kampus}, URL Kampus: {url_kampus}"
-    endp = f"https://media.datadebasa.com//api/v1.0/universitas/{url_kampus}"
+    endp = f"http://localhost:8080//api/v1.0/universitas/{url_kampus}"
     is_data = getData(endp)
     if is_data:
         return HttpResponse('data Sudah di tabahkan <br> <a href="/adduniv">Back</a>')
@@ -40,15 +41,14 @@ def postuniv(request):
         'url_kampus':url_kampus,
         'total_sitasi':0
     }    
-    endpoint = "https://media.datadebasa.com/api/v1.0/universitas"
+    endpoint = "http://localhost:8080/api/v1.0/universitas"
     is_save = postData(endpoint, data)
     if(is_save):
         return HttpResponse('data bserhasil di kirimkan  <br> <a href="/">Back</a>')
     return HttpResponse(f"post data {response}")
 
 def editUniv(request, prefix):
-    endp = f"https://media.datadebasa.com//api/v1.0/universitas/{prefix}"
-    
+    endp = f"http://localhost:8080//api/v1.0/universitas/{prefix}"
     data = getData(endp)
     if data:
         data = data[0]
@@ -57,13 +57,13 @@ def editUniv(request, prefix):
     else:
         return HttpResponse('data tidak ditemukan <br> <a href="/">Back</a>')
 
-def updateUniv(request):
+def updateUniv(request, prefix):
     nama_kampus = request.GET.get('nama_kampus')
     url_kampus = request.GET.get('url_kampus')
     
     # Lakukan sesuatu dengan data yang diambil, misalnya menyimpannya ke database atau memprosesnya lebih lanjut
     response = f"Nama Kampus: {nama_kampus}, URL Kampus: {url_kampus}"
-    endp = f"https://media.datadebasa.com//api/v1.0/universitas/{url_kampus}"
+    endp = f"http://localhost:8080//api/v1.0/universitas/{prefix}"
     is_data = getData(endp)
     if not is_data:
         return HttpResponse('data tidak ditemukan <br> <a href="/edit/{{ url_kampus }}">Back</a>')
@@ -75,7 +75,7 @@ def updateUniv(request):
         'total_sitasi': is_data[0]['total_sitasi']
     }
     
-    endpoint = f"https://media.datadebasa.com/api/v1.0/universitas/{url_kampus}"
+    endpoint = f"http://localhost:8080/api/v1.0/universitas/{url_kampus}"
     is_update = putData(endpoint, data)
     if is_update:
         return HttpResponse('data berhasil diupdate <br> <a href="/">Back</a>')
@@ -85,7 +85,7 @@ def addUniv(request):
     return render(request, 'add_univ.html')
 
 def deleteUniv(request, prefix):
-    endp = f"https://media.datadebasa.com/api/v1.0/universitas/{prefix}"
+    endp = f"http://localhost:8080/api/v1.0/universitas/{prefix}"
     
     try:
         response = requests.delete(endp)
