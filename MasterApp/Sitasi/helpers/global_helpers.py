@@ -37,7 +37,7 @@ def putData(url, data):
         return None
 
 def send_data_to_endpoint(data):
-    endpoint_url = "https://media.datadebasa.com/api/v1.0/dosen/"  # URL endpoint untuk update professor
+    endpoint_url = "http://localhost:8080/api/v1.0/dosen/"  # URL endpoint untuk update professor
     headers = {'Content-Type': 'application/json'}
 
     try:
@@ -49,7 +49,27 @@ def send_data_to_endpoint(data):
     except Exception as e:
         print("Error saat mengirim data ke endpoint:", e)
         
-        
+def send_data_array(data):
+    # dd(data)
+    # for dosen in data['dosen']:
+    #     dd(dosen['id_sitasi_dosen'])
+    endpoint_url = "http://localhost:8080/api/v1.0/Arrdosen/"  # URL endpoint untuk update professor
+    headers = {'Content-Type': 'application/json'}
+
+    try:
+        response = requests.put(endpoint_url, json=data, headers=headers)
+        if response.status_code == 200:
+            response.raise_for_status()  # Check if the request was successful            
+            datas = response.json()
+            # dd(datas)
+            print("Data berhasil dikirim ke endpoint. dengan data", datas)
+        else:
+            print("Gagal mengirim data. Status code:", response.status_code)
+            print("Response content:", response.content.decode())
+    except Exception as e:
+        print("Error saat mengirim data ke endpoint:", e)
+    
+    return data        
         
 def get_fake_user_agent():
     fake_user_agents = [

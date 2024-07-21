@@ -73,34 +73,48 @@
             <h1>Daftar Uiversitas</h1>
 
             <a href="/adduniv"><button class="btn btn-left p-3">Add Univ</button></a>
-            <table border="1px" width="50%">
-                <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Url Univ</th>
-                    <th>Total Sitasi</th>
-                    <th>Action</th>
-                </tr>
-                {% for univ in content %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ univ.nama_kampus }}</td>
-                    <td><a href="/detuniv/{{ univ.url_kampus }}">{{ univ.url_kampus }}</a></td>
-                    <td>{{ univ.total_sitasi }}</td>
-                    <td>
-                        <a href="/edit/{{ univ.url_kampus }}"">
-                        <img src=" /static/icons/edit.png" alt="Edit" width="20" height="20">
-                        </a>
-                        <form action="/deletedata/{{ univ.id_sitasi_kampus }}" method="GET">
-                          
-                            <button type="submit"  class="edit-button" onclick="return confirm('Apakah Anda yakin, ingin menghapus Pasien ini?');">Delete</button>
-                        </form>
-                    </td>
-                    
-                </tr>
-                {% endfor %}
+            <table id="example" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Url Univ</th>
+                        <th>Total Sitasi</th>
+                        <th>Last Sync</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for univ in content %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ univ.nama_kampus }}</td>
+                        <td><a href="/detuniv/{{ univ.url_kampus }}">{{ univ.url_kampus }}</a></td>
+                        <td>{{ univ.total_sitasi }}</td>
+                        <td>{{ univ.last_update }}</td>
+                        <td>
+                            <form action="/edit/{{ univ.url_kampus }}" method="GET" style="display:inline;">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                            </form>
+                            <form action="/deletedata/{{ univ.id_sitasi_kampus }}" method="GET" style="display:inline;">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                        
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
+
+
         </div>
+
+
     </div>
     {% include 'footer_adminlte.html' %}
 
