@@ -1,8 +1,0 @@
-{
-    "routes": [
-      {
-        "src": "MasterApp/(.*)",
-        "dest": "MasterApp/MasterApp/wsgi.py"
-      }
-    ]
-  }
