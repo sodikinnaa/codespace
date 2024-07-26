@@ -44,9 +44,7 @@ def putData(url, data):
 
 
 def send_data_to_endpoint(data):
-    endpoint_url = (
-        "http://localhost:8080/api/v1.0/dosen/"  # URL endpoint untuk update professor
-    )
+    endpoint_url = "https://media.datadebasa.com/api/v1.0/dosen/"  # URL endpoint untuk update professor
     headers = {"Content-Type": "application/json"}
 
     try:
@@ -65,7 +63,7 @@ def send_data_array(data):
     # dd(data)
     # for dosen in data['dosen']:
     #     dd(dosen['id_sitasi_dosen'])
-    endpoint_url = "http://localhost:8080/api/v1.0/Arrdosen/"  # URL endpoint untuk update professor
+    endpoint_url = "https://media.datadebasa.com/api/v1.0/Arrdosen/"  # URL endpoint untuk update professor
     headers = {"Content-Type": "application/json"}
 
     try:
