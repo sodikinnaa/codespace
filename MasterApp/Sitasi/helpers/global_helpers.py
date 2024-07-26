@@ -24,7 +24,9 @@ def dd(variable):
 def postData(url, data):
     headers = {"Content-Type": "application/json"}
     try:
-        response = requests.post(url, headers=headers, data=json.dumps(data))
+        response = requests.post(
+            url, headers=headers, verify=False, data=json.dumps(data)
+        )
         response.raise_for_status()  # Check if the request was successful
         return response.json()
     except requests.exceptions.RequestException as e:
@@ -35,7 +37,9 @@ def postData(url, data):
 def putData(url, data):
     headers = {"Content-Type": "application/json"}
     try:
-        response = requests.put(url, headers=headers, data=json.dumps(data))
+        response = requests.put(
+            url, headers=headers, verify=False, data=json.dumps(data)
+        )
         response.raise_for_status()  # Check if the request was successful
         return response.json()
     except requests.exceptions.RequestException as e:
@@ -49,7 +53,10 @@ def send_data_to_endpoint(data):
 
     try:
         response = requests.put(
-            endpoint_url + f"/{data['id_sitasi_dosen']}", json=data, headers=headers
+            endpoint_url + f"/{data['id_sitasi_dosen']}",
+            json=data,
+            headers=headers,
+            verify=False,
         )
         if response.status_code == 200:
             print("Data berhasil dikirim ke endpoint.")
