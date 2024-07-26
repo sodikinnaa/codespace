@@ -63,11 +63,11 @@ def send_data_array(data):
     # dd(data)
     # for dosen in data['dosen']:
     #     dd(dosen['id_sitasi_dosen'])
-    endpoint_url = "https://media.datadebasa.com/api/v1.0/Arrdosen/"  # URL endpoint untuk update professor
+    endpoint_url = "https://media.datadebasa.com/api/v1.0/Arrdosen"  # URL endpoint untuk update professor
     headers = {"Content-Type": "application/json"}
 
     try:
-        response = requests.put(endpoint_url, json=data, headers=headers)
+        response = requests.put(endpoint_url, json=data, headers=headers, verify=False)
         if response.status_code == 200:
             response.raise_for_status()  # Check if the request was successful
             datas = response.json()
