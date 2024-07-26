@@ -243,13 +243,11 @@ def scrape_all_authors(request, hasil):
         "mauthors": hasil,  # search query
         "astart": 20,  # page number
     }
-
     headers = {"User-Agent": get_fake_user_agent()}
 
     data = []
     param = 0
     max = 32
-    # max = 4
     increment = 1
     while True:
         try:
@@ -268,7 +266,7 @@ def scrape_all_authors(request, hasil):
                 try:
                     cited_by = re.search(
                         r"\d+", author.css(".gs_ai_cby::text").get()
-                    ).group()  # Cited by 17143 -> 17143
+                    ).group()
                 except:
                     cited_by = None
                 if 2 <= param <= max:
@@ -287,8 +285,6 @@ def scrape_all_authors(request, hasil):
                     data.append(data_author)
                     increment += 1
                     print(id_sitasi)
-                    # send_data_to_endpoint(data_author)
-                    # send_data(id_sitasi, data_author)
 
             if (
                 soup.css(".gsc_pgn button.gs_btnPR::attr(onclick)").get()
@@ -301,12 +297,7 @@ def scrape_all_authors(request, hasil):
                 params["astart"] += 10
             else:
                 break
-            # if 2 <= param <= max:
-            #     print(json.dumps(data, indent=2, ensure_ascii=False))
 
-            #     df = pd.read_json(json.dumps(data, indent=2, ensure_ascii=False))
-            #     total_cited_by = df['total_sitasi'].sum()
-            #     print("Total sum dari 'cited_by':", total_cited_by)
             param += 1
             print(param)
         except Exception as e:
