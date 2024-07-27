@@ -44,7 +44,9 @@ def postuniv(request):
     endpoint = "https://media.datadebasa.com/api/v1.0/universitas"
     is_save = postData(endpoint, data)
     if is_save:
-        return redirect("/")
+        return HttpResponse(
+            'Data Universitas Berhasil di tambahkan <br> <a href="/">Back</a>'
+        )
     return HttpResponse(f"post data {response}")
 
 
@@ -81,7 +83,9 @@ def updateUniv(request, prefix):
     endpoint = f"https://media.datadebasa.com/api/v1.0/universitas/{prefix}"
     is_update = putData(endpoint, data)
     if is_update:
-        return redirect("/")
+        return HttpResponse(
+            'Data Universitas Berhasil di Update <br> <a href="/">Back</a>'
+        )
     return HttpResponse(f"update data {response}")
 
 
@@ -95,7 +99,9 @@ def deleteUniv(request, prefix):
     try:
         response = requests.delete(endp)
         response.raise_for_status()  # Check if the request was successful
-        return redirect("/")
+        return HttpResponse(
+            'Data Universitas Berhasil di Update <br> <a href="/">Back</a>'
+        )
     except requests.exceptions.RequestException as e:
         return HttpResponse(f"Error deleting the data: {e} <br> <a href='/'>Back</a>")
 
@@ -305,4 +311,6 @@ def scrape_all_authors(request, hasil):
     dosen = {"dosen": data}
     send_data_array(dosen)
     endp = f"/detuniv/{hasil}"
-    return redirect(endp)
+    return HttpResponse(
+        f'Data Berhasil di Singkronisasi <br> <a href="/detuniv/{hasil}">Back</a>'
+    )
