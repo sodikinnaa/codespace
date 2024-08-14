@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .helpers.global_helpers import *
 import pandas as pd
 import re
+from datetime import datetime
 
 from parsel import Selector
 
@@ -90,6 +91,36 @@ def updateUniv(request, prefix):
 
 
 def addUniv(request):
+    return render(request, "add_univ.html")
+
+
+def updateTanggalUniv(request):
+    data = {"last_update": datetime.now().strftime("%Y-%m-%d")}
+    # dd(data)
+    endpoint = f"http://media.datadebasa.com/api/v1.0/universitas/teknokrat.ac.id"
+    is_data = getData(endpoint)
+    first_data = is_data[0]
+
+    data = {
+        "id_sitasi_kampus": first_data["id_sitasi_kampus"],
+        "nama_kampus": first_data["nama_kampus"],
+        "url_kampus": first_data["url_kampus"],
+        "last_update": datetime.now().strftime("%Y-%m-%d"),
+    }
+    update = {
+        "id_sitasi_kampus": "teknokrat.ac.id",
+        "nama_kampus": "Teknokrat 1",
+        "url_kampus": "teknokrat.ac.id",
+        "last_update": datetime.now().strftime("%Y-%m-%d"),
+    }
+
+    is_update = putData(endpoint, update)
+    dd(is_update)
+    if is_update:
+        return HttpResponse(
+            f'Data Universitas Berhasil di Update <br> <a href="/">Back</a> {is_update}'
+        )
+    return HttpResponse(f"update data {data}")
     return render(request, "add_univ.html")
 
 
@@ -237,10 +268,15 @@ def fake_autor(request, hasil):
             },
         ]
     }
-    send_data_array(data)
+    # send_data_array(data)
 
     enp = f"/detuniv/{hasil}"
-    return redirect(enp)
+    return "data"
+
+
+def update_dosen(request):
+    data = {"l": "s"}
+    return data
 
 
 def scrape_all_authors(request, hasil):

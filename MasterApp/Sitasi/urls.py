@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path("", views.daftaruniv, name="daftaruniv"),
     path("adduniv", views.addUniv, name="addUniv"),
+    path("updateTgl", views.updateTanggalUniv, name="dataBase"),
     path("deletedata/<str:prefix>", views.deleteUniv, name="deleteUniv"),
     # path("singkronisasi/<str:hasil>", views.fake_autor, name="scrape_all_authors"),
     path(

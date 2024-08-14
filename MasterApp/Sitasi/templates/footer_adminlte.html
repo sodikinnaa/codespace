@@ -1,14 +1,35 @@
 
 </body>
 <script>
-  new DataTable('#example', {
+  $(document).ready(function() {
+    var table = new DataTable('#example', {
       layout: {
-          topStart: {
-              buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
-          }
-      }
+        topStart: {
+          buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+        }
+      },
+      columnDefs: [
+        { 
+          type: 'num', 
+          targets: 2 // Target kolom "Total Sitasi"
+        },
+        {
+          orderable: false, 
+          targets: 0 // Target kolom "No"
+        }
+      ],
+      order: [[ 1, 'asc' ]] // Mengatur urutan default pada kolom "Nama"
+    });
+
+    // Menambahkan kolom "No" secara dinamis
+    table.on('order.dt search.dt', function () {
+      table.column(0, {search:'applied', order:'applied'}).nodes().each(function (cell, i) {
+        cell.innerHTML = i + 1;
+      });
+    }).draw();
   });
 </script>
+
 <!-- end table -->
 <script src="https://adminlte.io/themes/v3/plugins/jquery/jquery.min.js"></script>
 

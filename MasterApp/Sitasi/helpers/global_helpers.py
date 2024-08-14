@@ -36,11 +36,13 @@ def postData(url, data):
 
 def putData(url, data):
     headers = {"Content-Type": "application/json"}
+    # dd(data)
     try:
         response = requests.put(
             url, headers=headers, verify=False, data=json.dumps(data)
         )
         response.raise_for_status()  # Check if the request was successful
+
         return response.json()
     except requests.exceptions.RequestException as e:
         print(f"Error posting the data: {e}")
@@ -67,7 +69,7 @@ def send_data_to_endpoint(data):
 
 
 def send_data_array(data):
-    # dd(data)
+    dd(data)
     # for dosen in data['dosen']:
     #     dd(dosen['id_sitasi_dosen'])
     endpoint_url = "https://media.datadebasa.com/api/v1.0/Arrdosen"  # URL endpoint untuk update professor
